@@ -37,31 +37,35 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func 輸入月收入(_ sender: Any) {
-    }
-    
-    @IBAction func 固定開支％(_ sender: Any) {
-    }
-    
-    @IBAction func 固定開支(_ sender: Any) {
-    }
-    
-    @IBAction func 平均支出(_ sender: Any) {
-        
-    }
+   
     
     @IBAction func 計算(_ sender: Any) {
         //Button執行的地方
-        print("算出結果")
+        if let monthBalance = calMonthly(){
+            let year = monthBalance * 12
+            let alert = UIAlertController(title: "結果", message: "存了\(year)", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+        }
         
-        let alert = UIAlertController(title: "結果", message: "", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
+       
     }
     
-    
-    
+   
+    func calMonthly()->Float?{
+        let incomeMonthly = 輸入月收入.text!
+        let expensePercentage = 固定開支％.text!
+        let expense1 = 固定開支.text!
+        let expense2 = 平均支出.text!
+        
+        if let inM = Float(incomeMonthly),let expPercent = Float(expensePercentage),let exp1 = Float(expense1),let exp2 = Float(expense2){
+            let monthBalance = (inM * (1-expPercent/100)) - exp1 - exp2
+            return monthBalance
+        }else{
+            return nil
+        }
+    }
     
     
     
